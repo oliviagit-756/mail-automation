@@ -74,23 +74,23 @@ Gmail App Password: In your Google Account → Security → 2-Step Verification 
 ## Add a reminder via CLI (example)
 The script prompts:
 
--Name: Olivia
--Topic (saved as subject): Money
--Send time HH:MM: 19:22
--Recipient email: hello@gmail.com
+- Name: Olivia
+- Topic (saved as subject): Money
+- Send time HH:MM: 19:22
+- Recipient email: hello@gmail.com
 
 If RUN_SCHEDULER_AFTER_INSERT=true, the exact-minute loop starts immediately.
 Otherwise, you can start the loop manually (e.g., run_exact_minute_loop(stop_after_first_send=True) during testing).
 
 ## How it works (high level)
 
--Insert a reminder (user + topic + HH:MM + recipient).
--Every minute, the loop:
--Grabs matching reminders for the current HH:MM and app timezone.
--Skips any already sent today (via reminder_deliveries).
--Tries to generate a quote (≤120 chars) using OpenAI; falls back to a local quote bank if API fails.
--Emails the recipient (Gmail SMTP).
--Logs the send in reminder_deliveries.
+- Insert a reminder (user + topic + HH:MM + recipient).
+- Every minute, the loop:
+- Grabs matching reminders for the current HH:MM and app timezone.
+- Skips any already sent today (via reminder_deliveries).
+- Tries to generate a quote (≤120 chars) using OpenAI; falls back to a local quote bank if API fails.
+- Emails the recipient (Gmail SMTP).
+- Logs the send in reminder_deliveries.
 
 ## Configuration Notes
 
