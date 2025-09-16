@@ -17,7 +17,7 @@ Built in Python with MySQL for storage, Gmail SMTP for delivery, and OpenAI for 
 - OpenAI API key (optional; the app falls back to local quotes if missing)  
 
 ## Database Schema
-'''
+```
 Create a database (e.g., reminder_app) and three tables:
 
 CREATE TABLE users (
@@ -42,12 +42,12 @@ CREATE TABLE reminder_deliveries (
   UNIQUE KEY unique_once_per_day (reminder_id, delivered_on),
   FOREIGN KEY (reminder_id) REFERENCES reminders(id)
 );
-'''
+```
 
 ## Environment Variables (.env)
 
 Create a .env in the project root:
-'''
+```
 # App
 APP_TZ=Asia/Kolkata
 RUN_SCHEDULER_AFTER_INSERT=false
@@ -68,7 +68,7 @@ FROM_EMAIL=you@gmail.com
 
 # OpenAI
 OPENAI_API_KEY=sk-...
-'''
+```
 Gmail App Password: In your Google Account → Security → 2-Step Verification → App passwords → create one for “Mail”. Use that 16-char value as SMTP_PASS.
 
 ## Add a reminder via CLI (example)
@@ -94,10 +94,44 @@ Otherwise, you can start the loop manually (e.g., run_exact_minute_loop(stop_aft
 
 ## Configuration Notes
 
-SMTP_PORT=587 → STARTTLS; SMTP_PORT=465 → SSL block.
-Valid time format is strict HH:MM (00:00–23:59) via a regex guard.
-Quote length is clipped to ≤120 chars.
-If OpenAI is unavailable or returns bad text, a local, clean quote is used.
+  SMTP_PORT=587 → STARTTLS; SMTP_PORT=465 → SSL block.
+  Valid time format is strict HH:MM (00:00–23:59) via a regex guard.
+  Quote length is clipped to ≤120 chars.
+  If OpenAI is unavailable or returns bad text, a local, clean quote is used.
+
+## FlowChart 
 
 ![System Flowchart](flowchart.png)
+
+## Security & Secrets
+
+Never commit .env. Add it to .gitignore.
+
+Use Gmail App Passwords, not your main password.
+
+Restrict DB users to least privileges.
+
+Rotate OPENAI_API_KEY and SMTP credentials periodically.
+
+## Troubleshooting
+
+Nothing sends at the time
+
+Check the server/system timezone vs APP_TZ.
+
+Ensure the loop is running every minute (cron/task scheduler).
+
+Confirm time_hhmm matches current HH:MM exactly.
+
+SMTP errors
+
+Use App Password; verify port 587 (STARTTLS) or 465 (SSL).
+
+Some hosts block outbound SMTP—try another network.
+
+OpenAI errors
+
+Missing/invalid key → app falls back to local quotes (still sends).
+
+Network limits → also falls back.
 
