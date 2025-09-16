@@ -1,4 +1,4 @@
-# mail-automation
+# Emailer (minute-precise) with AI Quotes
 Send minute-precise emails with a short, original quote on the chosen topic.  
 Built in Python with MySQL for storage, Gmail SMTP for delivery, and OpenAI for 1-line quotes (with a safe local fallback).
 
@@ -95,8 +95,11 @@ Otherwise, you can start the loop manually (e.g., run_exact_minute_loop(stop_aft
 ## Configuration Notes
 
   SMTP_PORT=587 → STARTTLS; SMTP_PORT=465 → SSL block.
+  
   Valid time format is strict HH:MM (00:00–23:59) via a regex guard.
+  
   Quote length is clipped to ≤120 chars.
+  
   If OpenAI is unavailable or returns bad text, a local, clean quote is used.
 
 ## FlowChart 
