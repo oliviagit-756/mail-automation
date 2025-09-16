@@ -98,3 +98,6 @@ SMTP_PORT=587 → STARTTLS; SMTP_PORT=465 → SSL block.
 Valid time format is strict HH:MM (00:00–23:59) via a regex guard.
 Quote length is clipped to ≤120 chars.
 If OpenAI is unavailable or returns bad text, a local, clean quote is used.
+
+![System Flowchart](flowchart.png)
+
